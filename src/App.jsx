@@ -23,15 +23,26 @@ import { useSelector } from 'react-redux'
 import AddCourse from './components/core/Dashboard/AddCourse/index.jsx'
 import MyCourses from './components/core/Dashboard/MyCourses.jsx'
 import EditCourse from './components/core/Dashboard/EditCourse/'
+import Catalog from './pages/Catalog.jsx'
+import CourseDetails from './pages/CourseDetails.jsx'
+import Instructor from './components/core/Dashboard/Instructor.jsx'
+import ViewCourse from "./pages/ViewCourse.jsx"
+import VideoDetails from './components/core/ViewCourse/VideoDetails.jsx'
+import PurchaseHistory from './components/core/Dashboard/PurchaseHistory.jsx'
+
+
 
 function App() {
-  const {user} = useSelector((state)=> state.profile)
+  const { user } = useSelector((state) => state.profile)
   return (
     <div className='w-screen min-h-screen bg-richblack-900 flex flex-col font-inter'>
 
       <Navbar />
       <Routes>
         <Route path="/" element={<Home />} />
+        <Route path="/catalog/:catalogName" element={<Catalog />} />
+        <Route path="/courses/:courseId" element={<CourseDetails />} />
+
         <Route path="/signup" element={
 
           <OpenRoute>
@@ -76,20 +87,16 @@ function App() {
         }></Route>
         <Route path='/about' element={
 
-          <OpenRoute>
 
-            <About />
+          <About />
 
-          </OpenRoute>
 
         }></Route>
         <Route path='/contact' element={
 
-          <OpenRoute>
 
-            <Contact />
+          <Contact />
 
-          </OpenRoute>
 
         }></Route>
 
@@ -98,12 +105,13 @@ function App() {
 
           <Route path="dashboard/my-profile" element={< MyProfile />} />
           <Route path="dashboard/Settings" element={<Settings />} />
-          <Route path="dashboard/enrolled-courses" element={<EnrolledCourses />} />
 
           {
             user?.accountType === ACCOUNT_TYPE.STUDENT && (
               <>
                 <Route path="dashboard/cart" element={<Cart />} />
+                <Route path="dashboard/enrolled-courses" element={<EnrolledCourses />} />
+                <Route path="dashboard/purchase-history" element={<PurchaseHistory />} />
               </>
             )
           }
@@ -112,13 +120,23 @@ function App() {
 
             user?.accountType === ACCOUNT_TYPE.INSTRUCTOR && (
               <>
-                {/* <Route path="dashboard/instructor" element={<Instructor />} /> */}
-                <Route path="dashboard/add-course" element={<AddCourse/>} />
+                <Route path="dashboard/instructor" element={<Instructor />} />
+                <Route path="dashboard/add-course" element={<AddCourse />} />
                 <Route path="dashboard/edit-course/:courseId" element={<EditCourse />} />
                 <Route path="dashboard/my-courses" element={<MyCourses />} />
               </>
             )
           }
+        </Route>
+
+        <Route element={<PrivateRoute> <ViewCourse /> </PrivateRoute>}>
+          {user?.accountType === ACCOUNT_TYPE.STUDENT && (
+            <>
+              <Route path="view-course/:courseId/section/:sectionId/sub-section/:subSectionId" element={<VideoDetails />} />
+            </>
+          )
+          }
+
         </Route>
 
         <Route path='*' element={<Error />} />

@@ -3,8 +3,6 @@ import ProgressBar from "@ramonak/react-progress-bar"
 import { useSelector } from "react-redux"
 import { useNavigate } from "react-router-dom"
 import { getUserEnrolledCourses } from "../../../services/operations/profileAPI"
-import { formattedDate } from "../../../utils/dateFormatter"
-import { formatDate } from "../../../services/formatDate"
 
 
 
@@ -16,9 +14,7 @@ export default function EnrolledCourses() {
 
   const getEnrolledCourses = async () => {
     try {
-      const res = await getUserEnrolledCourses(token);
-                    //fetch all the data of backend in res (all courses in which user enrolled)
-      console.log("rESPINSE " , res);
+      const res = await getUserEnrolledCourses(token);              //fetch all the data of backend in res (all courses in which user enrolled)
       setEnrolledCourses(res);
     } catch (error) {
       console.log("Could not fetch enrolled courses.")
@@ -74,9 +70,6 @@ export default function EnrolledCourses() {
                 <div className="flex w-1/5 flex-col gap-2 px-2 py-3">
                   <p>Progress: {course.progressPercentage || 0}%</p>
                   <ProgressBar completed={course.progressPercentage || 0} height="8px" isLabelVisible={false} />                {/* progressbar show how many percentange course is completed; */}
-                </div>
-                <div className="text-white"> 
-                {formatDate(course.enrollmentDate)}
                 </div>
               </div>
             ))

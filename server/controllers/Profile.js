@@ -142,10 +142,13 @@ exports.getEnrolledCourses = async (req, res) => {
       let totalDurationInSeconds = 0
       SubsectionLength = 0
       for(var j = 0; j < userDetails.courses[i].courseContent.length; j++){
+
           totalDurationInSeconds += userDetails.courses[i].courseContent[j].subSection.reduce((acc, curr) => acc + parseInt(curr.timeDuration), 0)
           userDetails.courses[i].totalDuration = convertSecondsToDuration(totalDurationInSeconds)
           SubsectionLength +=  userDetails.courses[i].courseContent[j].subSection.length
       }
+
+      let courseProgress = await CourseProgress.findOne({ courseID: userDetails.courses[i]._id, userId: userId });
       let courseProgressCount = await CourseProgress.findOne({courseID: userDetails.courses[i]._id,  userId: userId,})
       courseProgressCount = courseProgressCount?.completedVideos.length
       if(SubsectionLength === 0) {
@@ -155,7 +158,9 @@ exports.getEnrolledCourses = async (req, res) => {
         const multiplier = Math.pow(10, 2)
         userDetails.courses[i].progressPercentage =  Math.round( (courseProgressCount / SubsectionLength) * 100 * multiplier ) / multiplier
       }
+      userDetails.courses[i].enrollmentDate = courseProgress.date;
     }
+    
 
     if(!userDetails) {
        return res.status(400).json({success: false,  message: `Could not find user with id: ${userDetails}`,})

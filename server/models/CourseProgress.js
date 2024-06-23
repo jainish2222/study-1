@@ -17,7 +17,12 @@ const courseProgress = new mongoose.Schema({
       type: mongoose.Schema.Types.ObjectId,
       ref: "SubSection",
     },
+
   ],
+  date : {
+    type: Date,
+    default: Date.now
+  }
 })
 
 module.exports = mongoose.model("courseProgress", courseProgress)
