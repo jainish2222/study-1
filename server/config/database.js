@@ -1,6 +1,5 @@
 const mongoose = require("mongoose");
 require("dotenv").config();
-//const DATABASE_URL = process.env.MONGODB_URL || "mongodb://0.0.0.0:27017/Study_notion_db";
  
 
 
