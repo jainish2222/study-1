@@ -1,0 +1,12 @@
+services:
+  - type: web
+    name: your-service-name
+    env: node
+    plan: free
+    buildCommand: npm install && npm run build
+    startCommand: npm start
+    envVars:
+      - key: NODE_VERSION
+        value: 20.12.2
+      - key: PORT
+        value: 3000
