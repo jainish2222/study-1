@@ -10,7 +10,8 @@
     "lint": "eslint . --ext js,jsx --report-unused-disable-directives --max-warnings 0",
     "preview": "vite preview",
     "dev:server": "cd server && npm run dev",
-    "dev": "concurrently -n \"client,server\" -c \"bgBlue,bgYellow\" \"npm run dev:client\" \"npm run dev:server\""
+    "dev": "concurrently -n \"client,server\" -c \"bgBlue,bgYellow\" \"npm run dev:client\" \"npm run dev:server\"",
+    "start": "vite preview"
   },
   "dependencies": {
     "@ramonak/react-progress-bar": "^5.2.0",

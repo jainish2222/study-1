@@ -102,6 +102,7 @@ export function login(email, password, navigate) {
 
 
 export function logout(navigate) {
+  console.log("I AM IN LOGOUT FUNCTION");
   return (dispatch) => {
     dispatch(setToken(null))
     dispatch(setUser(null))
